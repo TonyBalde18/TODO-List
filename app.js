@@ -5,6 +5,7 @@ const todoList = document.querySelector(".todo-list");
 
 //EVENT LISTENERS
 todoButton.addEventListener("click", addTodo);
+todoList.addEventListener("click", deleteCheck);
 
 //FUNCTIONS
 function addTodo(event) {
@@ -29,6 +30,25 @@ function addTodo(event) {
   todoDiv.appendChild(deleteButton);
   //Append to list
   todoList.appendChild(todoDiv); //ln 13
-  //clear the imput area after clicking on add btn
+  //clear the input area after clicking on add btn
   todoInput.value = "";
+}
+//Delete a task
+//apply fall and fade animation first and then remove the task from the list
+function deleteCheck(e) {
+  const item = e.target;
+  if (item.classList[0] === "delete-btn") {
+    const todo = item.parentElement;
+    todo.classList.add("fall"); //Animation
+    todo.addEventListener("transitionend", function () {
+      //will execute the function after animation finishes
+      todo.remove();
+    });
+  }
+
+  //Check mark on a completed task
+  if (item.classList[0] === "complete-btn") {
+    const todo = item.parentElement;
+    todo.classList.toggle("completed");
+  }
 }
