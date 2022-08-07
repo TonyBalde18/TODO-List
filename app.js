@@ -19,25 +19,28 @@ function addTodo(event) {
   //Create li
   const newTodo = document.createElement("li");
   newTodo.innerText = todoInput.value; //display the user input
-  newTodo.classList.add("todo-item");
-  todoDiv.appendChild(newTodo); //sticking to the Div ln 17
   //Add task to local storage
   saveLocalTodos(todoInput.value);
+  newTodo.classList.add("todo-item");
+  todoDiv.appendChild(newTodo);
+  todoInput.value = "";
+  //clear the input area after clicking on add btn
+
   //Completed task button
   const completedButton = document.createElement("button");
-  completedButton.innerHTML = '<i class="fas fa-check"></i>'; //add tag to the button
+  completedButton.innerHTML = `<i class="fas fa-check"></i>`; //add tag to the button
   completedButton.classList.add("complete-btn");
   todoDiv.appendChild(completedButton);
+
   //Delete button
   const trashButton = document.createElement("button");
-  trashButton.innerHTML = '<i class="fas fa-trash"></i>'; //add tag to the button
+  trashButton.innerHTML = `<i class="fas fa-trash"></i>`; //add tag to the button
   trashButton.classList.add("trash-btn");
   todoDiv.appendChild(trashButton);
   //Append to list
-  todoList.appendChild(todoDiv); //ln 17
-  //clear the input area after clicking on add btn
-  todoInput.value = "";
+  todoList.appendChild(todoDiv);
 }
+
 //Delete a task
 //apply fall and fade animation first and then remove the task from the list
 function deleteTodo(e) {
@@ -46,16 +49,20 @@ function deleteTodo(e) {
     const todo = item.parentElement;
     todo.classList.add("fall"); //Animation
     removeLocalTodos(todo);
-    todo.addEventListener("transitionend", function () {
-      //will execute the function after animation finishes
-      todo.remove();
-    });
+    todo.addEventListener(
+      "transitionend",
+      /* function () */ (e) => {
+        //will execute the function after animation finishes
+        todo.remove();
+      }
+    );
   }
 
   //Check mark on a completed task
   if (item.classList[0] === "complete-btn") {
     const todo = item.parentElement;
     todo.classList.toggle("completed");
+    console.log(todo);
   }
 }
 
@@ -76,13 +83,12 @@ function filterTodo(e) {
         }
         break;
       case "uncompleted":
-        if (todo.classList.contains("uncompleted")) {
+        if (!todo.classList.contains("completed")) {
           /*show every task that is not completed*/
           todo.styles.display = "flex";
         } else {
           todo.style.display = "none";
         }
-        break;
     }
   });
 }

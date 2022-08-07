@@ -3,16 +3,14 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
-  background-image: linear-gradient(120deg, #e2c35d, #d88771);
+  background-image: linear-gradient(120deg, #bdc3c7 0%, #2c3e50 100%);
   color: white;
   font-family: "Poppins", sans-serif;
   min-height: 100vh;
 }
-
 header {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 header,
@@ -22,7 +20,6 @@ form {
   justify-content: center;
   align-items: center;
 }
-
 form input,
 form button {
   padding: 0.5rem;
@@ -30,18 +27,16 @@ form button {
   border: none;
   background: white;
 }
-
 form button {
-  color: #d88771;
-  background: white;
+  color: #aaa6a5;
+  background: #f7fffe;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 form button:hover {
-  background: #d88771;
+  background: #aaa6a5;
   color: white;
 }
-
 .todo-container {
   display: flex;
   justify-content: center;
@@ -56,12 +51,16 @@ form button:hover {
 .todo {
   margin: 0.5rem;
   background: white;
-  color: black;
   font-size: 1.5rem;
+  color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.5s ease;
+  transition: all 1s ease;
+}
+
+.filter-todo {
+  padding: 1rem;
 }
 
 .todo li {
@@ -70,18 +69,16 @@ form button:hover {
 
 .trash-btn,
 .complete-btn {
-  background: #ff6f47;
+  background: #da0c0c;
   color: white;
   border: none;
   padding: 1rem;
   cursor: pointer;
   font-size: 1rem;
 }
-
 .complete-btn {
-  background: rgb(73, 204, 73);
+  background: rgb(11, 207, 86);
 }
-
 .todo-item {
   padding: 0rem 0.5rem;
 }
@@ -91,24 +88,26 @@ form button:hover {
   pointer-events: none;
 }
 
+.fall {
+  transform: translateY(10rem) rotateZ(20deg);
+  opacity: 0;
+}
+
 .completed {
   text-decoration: line-through;
   opacity: 0.5;
-}
-
-.fall {
-  transform: translateY(8rem) rotateZ(20deg);
-  opacity: 0;
 }
 
 /*remove all the styles from the filter section*/
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
+  -ms-appearance: none;
   appearance: none;
-  outline: none;
+  outline: 0;
   box-shadow: none;
-  border: none;
+  border: 0 !important;
+  background-image: none;
 }
 
 .select {
@@ -116,26 +115,25 @@ select {
   position: relative;
   overflow: hidden;
 }
-
 select {
-  color: #ff6f47;
-  width: 10rem;
+  color: #aaa6a5;
+  font-family: "Poppins", sans-serif;
   cursor: pointer;
-  padding: 1rem;
+  width: 12rem;
 }
 
 .select::after {
   content: "\25BC"; /*add an arrow icon on the right side of the filter section*/
   position: absolute;
-  background: #ff6f47;
   top: 0;
   right: 0;
   padding: 1rem;
+  background: #aaa6a5;
+  cursor: pointer;
   pointer-events: none; /*to be able to click on the arrow*/
-  transition: all 0.3s ease;
 }
 
 .select:hover::after {
   background: white;
-  color: #ff6f47;
+  color: #aaa6a5;
 }
