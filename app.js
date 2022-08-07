@@ -5,6 +5,7 @@ const todoList = document.querySelector(".todo-list");
 const filterOption = document.querySelector(".filter-todo");
 
 //EVENT LISTENERS
+document.addEventListener("DOMContentLoaded", getTodos); //check if content is loaded and then execute the function
 todoButton.addEventListener("click", addTodo);
 todoList.addEventListener("click", deleteTodo);
 filterOption.addEventListener("click", filterTodo);
@@ -12,14 +13,16 @@ filterOption.addEventListener("click", filterTodo);
 //FUNCTIONS
 function addTodo(event) {
   event.preventDefault(); //prevent form for submitting
-  //TODO div
+  //Todo DIV
   const todoDiv = document.createElement("div");
   todoDiv.classList.add("todo");
   //Create li
   const newTodo = document.createElement("li");
   newTodo.innerText = todoInput.value; //display the user input
   newTodo.classList.add("todo-item");
-  todoDiv.appendChild(newTodo); //sticking to the Div ln 13
+  todoDiv.appendChild(newTodo); //sticking to the Div ln 17
+  //Add task to local storage
+  saveLocalTodos(todoInput.value);
   //Completed task button
   const completedButton = document.createElement("button");
   completedButton.innerHTML = '<i class="fas fa-check"></i>'; //add tag to the button
@@ -31,7 +34,7 @@ function addTodo(event) {
   trashButton.classList.add("trash-btn");
   todoDiv.appendChild(trashButton);
   //Append to list
-  todoList.appendChild(todoDiv); //ln 13
+  todoList.appendChild(todoDiv); //ln 17
   //clear the input area after clicking on add btn
   todoInput.value = "";
 }
@@ -42,7 +45,7 @@ function deleteTodo(e) {
   if (item.classList[0] === "trash-btn") {
     const todo = item.parentElement;
     todo.classList.add("fall"); //Animation
-    
+
     todo.addEventListener("transitionend", function () {
       //will execute the function after animation finishes
       todo.remove();
@@ -73,7 +76,7 @@ function filterTodo(e) {
         }
         break;
       case "uncompleted":
-        if(!todo.classList.contains("completed")) {
+        if (!todo.classList.contains("completed")) {
           /*show every task that is not completed*/
           todo.styles.display = "flex";
         } else {
@@ -81,5 +84,47 @@ function filterTodo(e) {
         }
         break;
     }
+  });
+}
+
+//Save tasks into local storage
+function saveLocalTodos(todo) {
+  //check if there are tasks on the list
+  let todos;
+  if (localStorage.getItem("todos") === null) {
+    //in case there is no task on the list -> create empty array
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos")); //assuming that there is task on the list
+  }
+  todos.push(todo);
+  localStorage.setItem("todos", JSON.stringify(todos)); //push back into Local Storage
+}
+
+function getTodos() {
+  //check if there are tasks on the list
+  let todos;
+  if (localStorage.getItem("todos") === null) {
+    //in case there is no task on the list -> create empty array
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos")); //assuming that there is task on the list
+  }
+  todos.forEach(function (todo) {
+    const todoDiv = document.createElement("div");
+    todoDiv.classList.add("todo");
+    const newTodo = document.createElement("li");
+    newTodo.innerText = todo; //value from the local storage
+    newTodo.classList.add("todo-item");
+    todoDiv.appendChild(newTodo);
+    const completedButton = document.createElement("button");
+    completedButton.innerHTML = '<i class="fas fa-check"></i>';
+    completedButton.classList.add("complete-btn");
+    todoDiv.appendChild(completedButton);
+    const trashButton = document.createElement("button");
+    trashButton.innerHTML = '<i class="fas fa-trash"></i>';
+    trashButton.classList.add("trash-btn");
+    todoDiv.appendChild(trashButton);
+    todoList.appendChild(todoDiv);
   });
 }
