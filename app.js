@@ -45,7 +45,7 @@ function deleteTodo(e) {
   if (item.classList[0] === "trash-btn") {
     const todo = item.parentElement;
     todo.classList.add("fall"); //Animation
-
+    removeLocalTodos(todo);
     todo.addEventListener("transitionend", function () {
       //will execute the function after animation finishes
       todo.remove();
@@ -76,7 +76,7 @@ function filterTodo(e) {
         }
         break;
       case "uncompleted":
-        if (!todo.classList.contains("completed")) {
+        if (todo.classList.contains("uncompleted")) {
           /*show every task that is not completed*/
           todo.styles.display = "flex";
         } else {
@@ -127,4 +127,18 @@ function getTodos() {
     todoDiv.appendChild(trashButton);
     todoList.appendChild(todoDiv);
   });
+}
+
+function removeLocalTodos(todo) {
+  let todos;
+  if (localStorage.getItem("todos") === null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos"));
+  }
+  const todoIndex = todo.children[0].innerText; //get the index of the task inside the array
+  //first argument -> from what position will be deleted an element
+  //second argument -> how many elements will be removed
+  todos.splice(todos.indexOf(todoIndex), 1); //access the text
+  localStorage.setItem("todos", JSON.stringify(todos));
 }
