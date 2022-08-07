@@ -20,10 +20,14 @@ form {
   justify-content: center;
   align-items: center;
 }
-form input,
+form input {
+  padding: 1rem;
+  font-size: 1.5rem;
+  border: none;
+}
 form button {
   padding: 0.5rem;
-  font-size: 2rem;
+  font-size: 2.4rem;
   border: none;
   background: white;
 }
@@ -61,6 +65,7 @@ form button:hover {
 
 .filter-todo {
   padding: 1rem;
+  font-size: 1rem;
 }
 
 .todo li {
@@ -136,4 +141,21 @@ select {
 .select:hover::after {
   background: white;
   color: #aaa6a5;
+}
+
+svg {
+  width: 40px;
+  height: 40px;
+  margin-left: 20px;
+}
+
+h2,
+p {
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  min-height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
